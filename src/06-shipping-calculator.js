@@ -29,5 +29,32 @@
  * @returns {number} Shipping cost, 0 for free shipping, or -1 for invalid input
  */
 export function calculateShipping(weight, country, orderTotal) {
+  let baggagePrice;
+  if (weight === 0 || weight === -1||orderTotal<0) {
+    return -1;
+  } else {
+    if (country === "US") {
+      if (weight > 0 && weight <= 1) {
+        baggagePrice= 5;
+      } else if (weight > 1 && weight <= 5) {
+        baggagePrice= 10;
+      } else if (weight > 5) {
+        baggagePrice= 15;
+      } else {
+        baggagePrice = -1;
+      }
+      return orderTotal > 50 ? 0 : baggagePrice;
+    } else {
+      if (weight > 0 && weight <= 1) {
+        baggagePrice= 15;
+      } else if (weight > 1 && weight <= 5) {
+        baggagePrice= 25;
+      }else {
+          baggagePrice= 40;
+      }
+      return orderTotal > 100 ? 0 : baggagePrice;
+    }
+  }
+
   // Your code here
 }

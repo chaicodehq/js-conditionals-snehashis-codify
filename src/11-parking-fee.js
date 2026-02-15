@@ -33,5 +33,35 @@
  * @returns {number} Parking fee or -1 for invalid input
  */
 export function calculateParkingFee(hours, vehicleType) {
+  let roundedHours = Math.ceil(hours);
+  let vehicleList = ["car", "motorcycle", "bus"];
+  if (hours <= 0 || !vehicleList.includes(vehicleType.toLowerCase())) {
+    return -1;
+  } else {
+    let baseFee = -1;
+    switch (vehicleType) {
+      case "car":
+        baseFee = isMaxAmount(calculateFeeByHour(5, roundedHours, 3), 30);
+        break;
+      case "motorcycle":
+        baseFee = isMaxAmount(calculateFeeByHour(3, roundedHours, 2), 18);
+        break;
+      case "bus":
+        baseFee = isMaxAmount(calculateFeeByHour(10, roundedHours, 7), 60);
+        break;
+      default:
+        baseFee = -1;
+        break;
+    }
+    return baseFee;
+  }
   // Your code here
+}
+function calculateFeeByHour(initialFeeByType, hours, perHourCharges) {
+  return hours === 1
+    ? initialFeeByType
+    : initialFeeByType + ((hours - 1) * perHourCharges);
+}
+function isMaxAmount(totalFee, maxAmount) {
+  return maxAmount > totalFee ? totalFee : maxAmount;
 }

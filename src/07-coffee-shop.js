@@ -31,5 +31,48 @@
  * @returns {number} Total price or -1 for invalid input
  */
 export function calculateCoffeePrice(size, type, extras = {}) {
+  let price = 0;
+  const sizeList = ["small", "medium", "large"];
+  const typeList = ["regular", "latte", "cappuccino", "mocha"];
+  if (!(sizeList.includes(size) && typeList.includes(type))) {
+    return -1;
+  } else {
+    if (size === "small") {
+      price = handlePriceByType(type, 3, extras);
+    } else if (size === "medium") {
+      price = handlePriceByType(type, 4, extras);
+    } else {
+      price = handlePriceByType(type, 5, extras);
+    }
+    return price;
+  }
   // Your code here
+}
+function handlePriceByType(type, priceBySize, extras) {
+  if (type === "regular") {
+    priceBySize = priceBySize + 0 + handlExtras(extras);
+  } else if (type === "latte") {
+    priceBySize = priceBySize + 1 + handlExtras(extras);
+  } else if (type === "cappuccino") {
+    priceBySize = priceBySize + 1.5 + handlExtras(extras);
+  } else {
+    priceBySize = priceBySize + 2 + handlExtras(extras);
+  }
+  return Number(Number(priceBySize).toFixed(2));
+  // not done
+}
+function handlExtras(extras) {
+  if (Object.keys(extras).length <= 0) {
+    return 0;
+  } else {
+    if (extras.whippedCream && extras.extraShot) {
+      return 0.5 + 0.75;
+    } else if (extras.whippedCream) {
+      return 0.5;
+    } else if (extras.extraShot) {
+      return 0.75;
+    } else {
+      return 0;
+    }
+  }
 }

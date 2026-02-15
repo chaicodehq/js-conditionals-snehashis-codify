@@ -30,5 +30,72 @@
  * @returns {{ tipPercentage: number, tipAmount: number, totalAmount: number } | null}
  */
 export function calculateTip(billAmount, serviceRating) {
+  if (billAmount <= 0 || !Number.isInteger(serviceRating)) {
+    return null;
+  } else {
+    let baseObj = null;
+    switch (serviceRating) {
+      case 1:
+        baseObj = {
+          tipPercentage: 5,
+          tipAmount: Number(calculateTipAmount(billAmount, 0.05)),
+          totalAmount: calculateTotalAmount(
+            billAmount,
+            Number(calculateTipAmount(billAmount, 0.05)),
+          ),
+        };
+        break;
+case 2:
+   baseObj = {
+          tipPercentage: 10,
+          tipAmount: Number(calculateTipAmount(billAmount, 0.1)),
+          totalAmount: calculateTotalAmount(
+            billAmount,
+            Number(calculateTipAmount(billAmount, 0.1)),
+          ),
+        };
+  break;
+  case 3:
+       baseObj = {
+          tipPercentage: 15,
+          tipAmount: Number(calculateTipAmount(billAmount, 0.15)),
+          totalAmount: calculateTotalAmount(
+            billAmount,
+            Number(calculateTipAmount(billAmount, 0.15)),
+          ),
+        };
+    break;
+    case 4:
+      baseObj = {
+          tipPercentage: 20,
+          tipAmount: Number(calculateTipAmount(billAmount, 0.2)),
+          totalAmount: calculateTotalAmount(
+            billAmount,
+            Number(calculateTipAmount(billAmount, 0.2)),
+          ),
+        };
+      break;
+      case 5:
+         baseObj = {
+          tipPercentage: 25,
+          tipAmount: Number(calculateTipAmount(billAmount, 0.25)),
+          totalAmount: calculateTotalAmount(
+            billAmount,
+            Number(calculateTipAmount(billAmount, 0.25)),
+          ),
+        };
+        break;
+      default:
+        baseObj=null
+        break;
+    }
+    return baseObj
+  }
   // Your code here
+}
+function calculateTipAmount(billAmount, tipPercentage) {
+  return (billAmount * tipPercentage).toFixed(2);
+}
+function calculateTotalAmount(billAmount, tipAmount) {
+  return Number(Number(billAmount + tipAmount).toFixed(2));
 }

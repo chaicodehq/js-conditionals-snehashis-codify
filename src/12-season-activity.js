@@ -12,14 +12,14 @@
  *   - September, October, November (9, 10, 11)   → "Autumn"
  *
  * Step 2 — Suggest an activity based on season AND temperature (°C):
- *   - Winter + temp < 0     → "skiing"
- *   - Winter + temp >= 0    → "ice skating"
- *   - Spring + temp > 20    → "hiking"
- *   - Spring + temp <= 20   → "museum visit"
- *   - Summer + temp > 35    → "swimming"
- *   - Summer + temp <= 35   → "cycling"
- *   - Autumn + temp > 15    → "nature walk"
- *   - Autumn + temp <= 15   → "reading at a cafe"
+ *   - Winter + temperature < 0     → "skiing"
+ *   - Winter + temperature >= 0    → "ice skating"
+ *   - Spring + temperature > 20    → "hiking"
+ *   - Spring + temperature <= 20   → "museum visit"
+ *   - Summer + temperature > 35    → "swimming"
+ *   - Summer + temperature <= 35   → "cycling"
+ *   - Autumn + temperature > 15    → "nature walk"
+ *   - Autumn + temperature <= 15   → "reading at a cafe"
  *
  * Return an object: { season: string, activity: string }
  *
@@ -31,5 +31,51 @@
  * @returns {{ season: string, activity: string } | null}
  */
 export function getSeasonActivity(month, temperature) {
+  if (!(month >= 1 && month <= 12)) {
+    return null;
+  } else {
+    let baseObj = null;
+    switch (getMonthWiseSeason(month)) {
+      case "Winter":
+        baseObj = {
+          season: getMonthWiseSeason(month),
+          activity: temperature < 0 ? "skiing" : "ice skating",
+        };
+        break;
+      case "Spring":
+        baseObj = {
+          season: getMonthWiseSeason(month),
+          activity: temperature > 20 ? "hiking" : "museum visit",
+        };
+        break;
+      case "Summer":
+        baseObj = {
+          season: getMonthWiseSeason(month),
+          activity: temperature > 35 ? "swimming" : "cycling",
+        };
+        break;
+      case "Autumn":
+        baseObj = {
+          season: getMonthWiseSeason(month),
+          activity: temperature > 15 ? "nature walk" : "reading at a cafe",
+        };
+        break;
+      default:
+        baseObj = null;
+        break;
+    }
+    return baseObj;
+  }
   // Your code here
+}
+function getMonthWiseSeason(month) {
+  if (month === 1 || month === 2 || month === 12) {
+    return "Winter";
+  } else if (month === 3 || month === 4 || month == 5) {
+    return "Spring";
+  } else if (month === 6 || month === 7 || month === 8) {
+    return "Summer";
+  } else {
+    return "Autumn";
+  }
 }
